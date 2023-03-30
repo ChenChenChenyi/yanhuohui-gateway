@@ -3,10 +3,12 @@ package com.chenyi.yanhuohui.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-public class JWTUtil {
+@Component
+public class JwtUtils {
     public static final String SECRET_KEY = "erbadagang-1899154"; //秘钥
     public static final long TOKEN_EXPIRE_TIME = 5 * 60 * 1000; //token过期时间
     public static final long REFRESH_TOKEN_EXPIRE_TIME = 10 * 60 * 1000; //refreshToken过期时间

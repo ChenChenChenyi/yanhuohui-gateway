@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: gateway-provider_1
+          uri: lb://yanhuohui
+          predicates:
+            - Path=/gateway/**
+          # 配置过滤器（局部）
+          filters:
+            - AddResponseHeader=X-Response-Foo, Bar
+            # StripPrefix：去除原始请求路径中的前1级路径，即/gateway
+            - StripPrefix=1
+
+#下面这种是properties的写法
+# gateway 路由策略
+#  spring.cloud.gateway.routes[0].id=user
+#  spring.cloud.gateway.routes[0].uri=lb://user-service
+#  spring.cloud.gateway.routes[0].predicates[0]=Path=/userService/**
+#  spring.cloud.gateway.routes[0].filters[0]=StripPrefix=1
+#  spring.cloud.gateway.routes[1].id=order
+#  spring.cloud.gateway.routes[1].uri=lb://order-service
+#  spring.cloud.gateway.routes[1].predicates[0]=Path=/orderService/**
+#  spring.cloud.gateway.routes[1].filters[0]=StripPrefix=1
