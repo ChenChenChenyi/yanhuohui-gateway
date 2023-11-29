@@ -40,6 +40,13 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+
+        // 不判断token的过滤器，比如登录接口
+        if (exchange.getAttribute(AttrbuteConstant.ATTRIBUTE_IGNORE_TEST_GLOBAL_FILTER) != null
+                && exchange.getAttribute(AttrbuteConstant.ATTRIBUTE_IGNORE_TEST_GLOBAL_FILTER).equals(true)) {
+            return chain.filter(exchange);
+        }
+
         String token = request.getHeaders().getFirst(RequestKeyConstants.TOKEN);
         //检查token是否为空
         if (StringUtils.isEmpty(token)) {
@@ -72,29 +79,6 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
                 return denyAccess(exchange, gatewayBaseResponse);
             }
         }
-
-
-        Map claimMap = jwtUtils.parseJwt(token);
-        //token有误
-        if (claimMap.containsKey("exception")) {
-            log.error() (claimMap.get("exception").toString());
-            return denyAccess(exchange, ResultCode.TOKEN_INVALID);
-        }
-
-        //token无误，将用户信息设置进header中,传递到下游服务
-        String userId = claimMap.get("").asString();
-        Consumer<HttpHeaders> headers = httpHeaders -> {
-            httpHeaders.add(RequestKeyConstants.USER_ID, userId);
-        };
-        request.mutate().headers(headers).build()
-
-
-//        if(JwtUtils.verify(token)){
-//            return chain.filter(exchange);
-//        }else {
-//            return denyAccess(exchange, ResultCode.JWT_INVALID);
-//        }
-        return chain.filter(exchange);
     }
 
     /**
