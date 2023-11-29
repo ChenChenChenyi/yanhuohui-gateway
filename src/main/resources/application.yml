@@ -1,9 +1,17 @@
 spring:
   cloud:
     gateway:
+      # 配合nacos实现通过服务名转发
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+          filters:
+            - StripPrefix=1
+      # 手动配置路由参数，可以配置更加精细的规则
       routes:
         - id: gateway-provider_1
-          uri: lb://yanhuohui
+          uri: lb://yanhuohui-order
           predicates:
             - Path=/gateway/**
           # 配置过滤器（局部）

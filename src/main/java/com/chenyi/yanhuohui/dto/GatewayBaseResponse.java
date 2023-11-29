@@ -1,23 +1,24 @@
 package com.chenyi.yanhuohui.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class BaseResponse {
+public class GatewayBaseResponse {
     private String code;
     private String message;
     private String data;
 
-    public BaseResponse() {
+    public GatewayBaseResponse() {
 
     }
 
-    public BaseResponse(String code, String message) {
+    public GatewayBaseResponse(String code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public BaseResponse(String code, String message, String data) {
+    public GatewayBaseResponse(String code, String message, String data) {
         this.code = code;
         this.message = message;
         this.data = data;
