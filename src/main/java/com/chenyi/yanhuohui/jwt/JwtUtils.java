@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.chenyi.yanhuohui.constants.RequestKeyConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -63,8 +64,11 @@ public class JwtUtils {
     }
 
     public static boolean checkToken(String jwtToken) {
+        //先从header中取出Bearer Token后面的Token
+        String token = jwtToken.substring(RequestKeyConstants.JWT_HEADER_PREFIX.length());
+
         //TODO 根据自己的业务修改
-        Map<String, Claim> claimsMap = parseJwt(jwtToken);
+        Map<String, Claim> claimsMap = parseJwt(token);
         /*
             对jwt里面的用户信息做判断
             根据自己的业务编写

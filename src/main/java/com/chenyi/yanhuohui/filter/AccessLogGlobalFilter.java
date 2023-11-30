@@ -69,6 +69,7 @@ public class AccessLogGlobalFilter implements GlobalFilter, Ordered {
             };
         }
         InetSocketAddress remoteAddress = request.getRemoteAddress();
+        //then之后的代码是后置处理，返回response之后执行的
         return chain.filter(exchange.mutate().request(request).build()).then(Mono.fromRunnable(() -> {
             ServerHttpResponse response = exchange.getResponse();
             HttpStatus statusCode = response.getStatusCode();

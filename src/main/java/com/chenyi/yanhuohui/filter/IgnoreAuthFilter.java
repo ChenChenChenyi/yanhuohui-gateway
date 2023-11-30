@@ -1,5 +1,6 @@
 package com.chenyi.yanhuohui.filter;
 
+import com.chenyi.yanhuohui.constants.AttrbuteConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -63,7 +64,7 @@ public class IgnoreAuthFilter extends AbstractGatewayFilterFactory<IgnoreAuthFil
             }));*/
             log.info("进入innerFilter=====" + config.isIgnoreGlobalFilter());
             if (config.isIgnoreGlobalFilter() == true) {
-                exchange.getAttributes().put(AttrbuteConstant.ATTRIBUTE_IGNORE_TEST_GLOBAL_FILTER, true);
+                exchange.getAttributes().put(AttrbuteConstant.ATTRIBUTE_IGNORE_TOKEN_VERIFY_FLAG, true);
             }
             return chain.filter(exchange);
         }

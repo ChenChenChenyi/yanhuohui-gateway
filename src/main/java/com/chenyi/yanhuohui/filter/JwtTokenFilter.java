@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.chenyi.yanhuohui.constants.AttrbuteConstant;
 import com.chenyi.yanhuohui.constants.RequestKeyConstants;
 import com.chenyi.yanhuohui.constants.ResultCode;
 import com.chenyi.yanhuohui.dto.GatewayBaseResponse;
@@ -42,8 +43,8 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
 
         // 不判断token的过滤器，比如登录接口
-        if (exchange.getAttribute(AttrbuteConstant.ATTRIBUTE_IGNORE_TEST_GLOBAL_FILTER) != null
-                && exchange.getAttribute(AttrbuteConstant.ATTRIBUTE_IGNORE_TEST_GLOBAL_FILTER).equals(true)) {
+        if (exchange.getAttribute(AttrbuteConstant.ATTRIBUTE_IGNORE_TOKEN_VERIFY_FLAG) != null
+                && exchange.getAttribute(AttrbuteConstant.ATTRIBUTE_IGNORE_TOKEN_VERIFY_FLAG).equals(true)) {
             return chain.filter(exchange);
         }
 
